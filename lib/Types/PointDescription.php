@@ -354,8 +354,8 @@ class PointDescription extends Base
         $object->ZipCode = intval($object->ZipCode);
         $object->TerminalCityCode = intval($object->TerminalCityCode);
         $object->CourierDelivery = boolval($object->CourierDelivery);
-        $object->TariffZone = intval($object->TariffZone);
-        $object->DeliveryPeriod = floatval($object->DeliveryPeriod);
+        //$object->TariffZone = intval($object->TariffZone);
+        //$object->DeliveryPeriod = floatval($object->DeliveryPeriod);
         parent::__construct($object);
     }
 }
