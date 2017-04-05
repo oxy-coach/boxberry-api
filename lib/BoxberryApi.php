@@ -202,7 +202,7 @@ class BoxberryApi implements ApiInterface
      */
     public function deliveryCosts($parameters = [])
     {
-        $this->validator->validateDeliveryInfo($parameters);
+        //$this->validator->validateDeliveryInfo($parameters);
         return $this->mapper->map($this->impl->deliveryCosts($parameters), 'DeliveryPrice');
     }
 
