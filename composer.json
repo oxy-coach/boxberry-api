@@ -1,6 +1,5 @@
 {
     "name": "ecomlogic/boxberry-sdk",
-    "version": "1.0.0",
     "type": "library",
     "description": "Boxberry API implementation",
     "keywords": ["API","JSON","SOAP"],
