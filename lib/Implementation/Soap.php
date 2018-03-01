@@ -14,12 +14,12 @@ class Soap implements ApiInterface
 {
 
     /**
-     * @var SoapClient;
+     * @var \SoapClient;
      */
     private $public_api;
 
     /**
-     * @var SoapClient;
+     * @var \SoapClient;
      */
     private $lc_api;
 
@@ -30,8 +30,11 @@ class Soap implements ApiInterface
     private $api_key;
 
     /**
+     * Soap constructor.
      * @param string $api_key
-     * @param string $base_url
+     * @param string $api_url
+     * @param $use_https
+     * @param array $options
      */
     public function __construct($api_key, $api_url, $use_https, $options = [])
     {
@@ -210,11 +213,11 @@ class Soap implements ApiInterface
     {
         $api_parameters = [];
 
-        if ( '' !== $from) {
+        if ('' !== $from) {
             $api_parameters['from'] = $from;
         }
 
-        if ( '' !== $to) {
+        if ('' !== $to) {
             $api_parameters['to'] = $to;
         }
 
@@ -238,11 +241,11 @@ class Soap implements ApiInterface
     {
         $api_parameters = [];
 
-        if ( '' !== $from) {
+        if ('' !== $from) {
             $api_parameters['from'] = $from;
         }
 
-        if ( '' !== $to) {
+        if ('' !== $to) {
             $api_parameters['to'] = $to;
         }
 
@@ -263,7 +266,7 @@ class Soap implements ApiInterface
 
     /**
      * {@inheritdoc}
-     * @throws SoapFault
+     * @throws \SoapFault
      */
     public function sendRequest($method, $parameters = [], $options = [])
     {
@@ -291,14 +294,12 @@ class Soap implements ApiInterface
         try {
             $result = $soap_client->{$method_name}($request_parameters);
             return  $result;
-        }
-        catch(\SoapFault $error) {
+        } catch (\SoapFault $error) {
             //If code returned by $error->getCode() === 0 that means API error occured
-            if ( 0 === $error->getCode() ) {
+            if (0 === $error->getCode()) {
                 throw new ApiException($error->getMessage(), ApiException::API_ERROR);
-            }
-            //Else it means SOAP error occured and we should rethrow with previous exception $error
-            else {
+            } else {
+                //Else it means SOAP error occured and we should rethrow with previous exception $error
                 throw $error;
             }
         }

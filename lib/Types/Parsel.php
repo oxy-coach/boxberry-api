@@ -2,6 +2,10 @@
 
 namespace Morfin60\BoxberryApi\Types;
 
+/**
+ * Class Parsel
+ * @package Morfin60\BoxberryApi\Types
+ */
 class Parsel extends Base
 {
     public $Track;
@@ -12,6 +16,10 @@ class Parsel extends Base
     public $Barcode;
     public $ImId;
 
+    /**
+     * Parsel constructor.
+     * @param $object
+     */
     public function __construct($object)
     {
         $this->Track = $object->track;

@@ -15,7 +15,7 @@ class Validator
 {
 
     /**
-     * @var Symfony\Component\Validator\Validator\RecursiveValidator $validator
+     * @var \Symfony\Component\Validator\Validator\RecursiveValidator $validator
      */
     private $validator;
 
@@ -25,8 +25,9 @@ class Validator
     }
 
     /**
-     * Функция, проверяющая ImId на корректность
+     *  Функция, проверяющая ImId на корректность
      * @param string $im_id
+     * @throws ValidationException
      */
     public function validateImId($im_id)
     {
@@ -47,7 +48,7 @@ class Validator
     /**
      * Функция, проверяющая Zip на корректность
      * @param string|int $zip
-     * @throws Morfin60\BoxberryApi\Exception\ValidationException
+     * @throws ValidationException
      */
     public function validateZip($zip)
     {
@@ -69,7 +70,7 @@ class Validator
      * Проверить период дат $from - $to. Даты должны быть в формате YYYYMMDD
      * @param string $from дата в формате YYYYMMDD
      * @param string $to дата в форматеYYYYMMDD
-     * @throws Morfin60\BoxberryApi\Exception\ValidationException
+     * @throws \Morfin60\BoxberryApi\Exception\ValidationException
      */
     public function validatePeriod($from, $to)
     {
@@ -81,11 +82,17 @@ class Validator
         $constraint = new Assert\Collection([
             'from' => new Assert\Required([
                 new Assert\Type(['type' => 'string', 'message' => 'From date should be an {{ type }}']),
-                new Assert\Regex(['pattern' => '~^([1-9][0-9]{3})(0[1-9]|1[0-2])([0-2][0-9]|3[01])$~', 'message' => 'From date should have format YYYYMMDD'])
+                new Assert\Regex([
+                    'pattern' => '~^([1-9][0-9]{3})(0[1-9]|1[0-2])([0-2][0-9]|3[01])$~',
+                    'message' => 'From date should have format YYYYMMDD'
+                ])
             ]),
             'to' => new Assert\Required([
                 new Assert\Type(['type' => 'string', 'message' => 'To date  should be an {{ type }}']),
-                new Assert\Regex(['pattern' => '~^([1-9][0-9]{3})(0[1-9]|1[0-2])([0-2][0-9]|3[01])$~', 'message' => 'To date should have format YYYYMMDD'])
+                new Assert\Regex([
+                    'pattern' => '~^([1-9][0-9]{3})(0[1-9]|1[0-2])([0-2][0-9]|3[01])$~',
+                    'message' => 'To date should have format YYYYMMDD'
+                ])
             ]),
         ]);
 
@@ -95,7 +102,7 @@ class Validator
     /**
      * Проверить массив с информацией о доставке
      * @param array $delivery_info ассоциативный массив, содержащий информацию о доставке
-     * @throws Morfin60\BoxberryApi\Exception\ValidationException
+     * @throws \Morfin60\BoxberryApi\Exception\ValidationException
      */
     public function validateDeliveryInfo($delivery_info)
     {
@@ -167,17 +174,16 @@ class Validator
 
     /**
      * Функция, проверяющая входные значения используя набор правил $constraint
-     * @param array $fields ассоциативный массив полей
-     * @param Symfony\Component\Validator\Constraints\Collection $constraint набор правил, по которым будет производиться проверка
-     * @throws Morfin60\BoxberryApi\Exception\ValidationException
+     * @param array $values ассоциативный массив полей
+     * @param \Symfony\Component\Validator\Constraints\Collection
+     * $constraint набор правил, по которым будет производиться проверка
+     * @throws ValidationException
      */
     public function validateValues($values, $constraint)
     {
-
-        $violations = $this->validator->validateValue($values, $constraint);
-        $violations_list = [];
+        $violations = $this->validator->validate($values, $constraint);
         //If failed to validate arguments then we should throw ValidationException and pass violation list to $data
-        if ( 0 !== $violations->count()) {
+        if (0 !== $violations->count()) {
             throw new ValidationException('Failed to validate values', 1, null, $violations);
         }
     }
