@@ -2,6 +2,10 @@
 
 namespace Morfin60\BoxberryApi\Types;
 
+/**
+ * Class OrderBalance
+ * @package Morfin60\BoxberryApi\Types
+ */
 class OrderBalance extends Base
 {
     public $Id;
@@ -10,6 +14,10 @@ class OrderBalance extends Base
     public $DeliverySum;
     public $PaymentSum;
 
+    /**
+     * OrderBalance constructor.
+     * @param $object
+     */
     public function __construct($object)
     {
         $this->Id = intval($object->ID);

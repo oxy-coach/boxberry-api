@@ -6,7 +6,6 @@ use Morfin60\BoxberryApi\ApiInterface;
 use Morfin60\BoxberryApi\Exception\ApiException;
 use Morfin60\BoxberryApi\Exception\JsonException;
 
-
 /**
  * Класс, реализущий JSON интерфейс API Boxberry
  * @author Alexander N <morfin60@gmail.com>
@@ -31,8 +30,10 @@ class Json implements ApiInterface
     private $api_key;
 
     /**
+     * Json constructor.
      * @param string $api_key
-     * @param string $base_url
+     * @param string $api_url
+     * @param bool $use_https
      */
     public function __construct($api_key, $api_url, $use_https)
     {
@@ -202,11 +203,11 @@ class Json implements ApiInterface
     {
         $api_parameters = [];
 
-        if ( '' !== $from) {
+        if ('' !== $from) {
             $api_parameters['from'] = $from;
         }
 
-        if ( '' !== $to) {
+        if ('' !== $to) {
             $api_parameters['to'] = $to;
         }
 
@@ -228,11 +229,11 @@ class Json implements ApiInterface
     {
         $api_parameters = [];
 
-        if ( '' !== $from) {
+        if ('' !== $from) {
             $api_parameters['from'] = $from;
         }
 
-        if ( '' !== $to) {
+        if ('' !== $to) {
             $api_parameters['to'] = $to;
         }
 
@@ -259,9 +260,8 @@ class Json implements ApiInterface
         if (array_key_exists('type', $options)) {
             $allowed_types = ['GET', 'POST'];
             if (!in_array($options['type'], $allowed_types)) {
-                throw new InvalidArgumentException('Invalid request type '.$options['type']);
-            }
-            else {
+                throw new \InvalidArgumentException('Invalid request type '.$options['type']);
+            } else {
                 $type = $options['type'];
             }
         }
@@ -274,13 +274,12 @@ class Json implements ApiInterface
         ], $parameters);
 
         try {
-            if ( 'GET' === $type) {
+            if ('GET' === $type) {
                 $response = $this->client->get($this->url, [
                     'query' => $request_parameters,
                     'connect_timeout' => 10
                 ]);
-            }
-            else {
+            } else {
                 $response = $this->client->post($this->url, [
                     'form_params' => $request_parameters,
                     'connect_timeout' => 10
@@ -288,29 +287,41 @@ class Json implements ApiInterface
             }
 
             $json_data = $response->getBody()->getContents();
-        }
-        catch(\GuzzleHttp\Exception\GuzzleException $error) {
+        } catch (\GuzzleHttp\Exception\GuzzleException $error) {
             throw new ApiException($error->getMessage(), ApiException::HTTP_ERROR, $error);
         }
 
         //Удаление BOM в выводе если есть
-        $json_data = preg_replace('~^\xEF\xBB\xBF~isu','', $json_data);
+        $json_data = preg_replace('~^\xEF\xBB\xBF~isu', '', $json_data);
         $data = json_decode($json_data, false);
 
         //В случае неудачи разбора JSON кидаем исключение JsonException
-        if (NULL === $data) {
-            throw new JsonException('Failed to parse received json with message '.json_last_error_msg(), JsonException::DECODE_EXCEPTION, null, $json_data);
+        if (null === $data) {
+            throw new JsonException(
+                'Failed to parse received json with message '.json_last_error_msg(),
+                JsonException::DECODE_EXCEPTION,
+                null,
+                $json_data
+            );
         }
         //Если API вернуло какую-то ошибку
-        if (
-                is_array($data) &&
-                isset($data[0]) &&
-                isset($data[0]->err)
+        if (is_array($data)
+            && isset($data[0])
+            && isset($data[0]->err)
         ) {
-            throw new ApiException('Errors occured while processing API request', ApiException::API_ERROR, null, $data[0]->err);
-        }
-        elseif (is_object($data) && isset($data->err)) {
-            throw new ApiException('Errors occured while processing API request', ApiException::API_ERROR, null, $data->err);
+            throw new ApiException(
+                'Errors occured while processing API request',
+                ApiException::API_ERROR,
+                null,
+                $data[0]->err
+            );
+        } elseif (is_object($data) && isset($data->err)) {
+            throw new ApiException(
+                'Errors occured while processing API request',
+                ApiException::API_ERROR,
+                null,
+                $data->err
+            );
         }
 
         return $data;

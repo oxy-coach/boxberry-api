@@ -7,8 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use Morfin60\BoxberryApi\Exception\ApiException;
 use Morfin60\BoxberryApi\Validation\Validator;
-use Morfin60\BoxberryApi\Validation\Constraints as LibraryConstraints;
-
 
 /**
  * Класс, реализующий JSON и SOAP API Boxberry
@@ -48,6 +46,7 @@ class BoxberryApi implements ApiInterface
      * @param string|Morfin60\BoxberryApi\ApiInterface $type
      * @param bool $use_https
      * @param bool $test
+     * @throws Exception\ValidationException
      */
     public function __construct($api_key, $type = BoxberryApi::API_SOAP, $use_https = false, $test = false)
     {
@@ -87,8 +86,7 @@ class BoxberryApi implements ApiInterface
         if (class_exists($class)) {
             $working_url = (true == $test) ? self::API_URL_TEST : self::API_URL;
             $this->impl = new $class($api_key, $working_url, $use_https);
-        }
-        else {
+        } else {
             throw new \InvalidArgumentException('Class for type {$type} does not exist', ApiException::BAD_API_CLASS);
         }
 
@@ -117,7 +115,10 @@ class BoxberryApi implements ApiInterface
         $constraint = new Assert\Collection([
             'city_code' => new Assert\Required([
                 new Assert\Type(['type' => 'numeric', 'message' => 'city_code should be either json or soap']),
-                new Assert\GreaterThanOrEqual(['value' => 0, 'message' => 'city_code should be greater or equal than {{ compared_value }}'])
+                new Assert\GreaterThanOrEqual([
+                    'value' => 0,
+                    'message' => 'city_code should be greater or equal than {{ compared_value }}'
+                ])
             ]),
             'prepaid' => new Assert\Required([
                 new Assert\Type(['type' => 'numeric', 'message' => 'prepaid should be {{ type }}']),

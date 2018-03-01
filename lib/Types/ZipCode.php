@@ -2,6 +2,10 @@
 
 namespace Morfin60\BoxberryApi\Types;
 
+/**
+ * Class ZipCode
+ * @package Morfin60\BoxberryApi\Types
+ */
 class ZipCode extends Base
 {
     public $Zip;
@@ -11,6 +15,10 @@ class ZipCode extends Base
     public $ZoneExpressDelivery;
     public $ExpressDelivery;
 
+    /**
+     * ZipCode constructor.
+     * @param $object
+     */
     public function __construct($object)
     {
         $object->Zip = intval($object->Zip);

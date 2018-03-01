@@ -14,6 +14,10 @@ class Act extends Base
     public $Track;
     public $Date;
 
+    /**
+     * Act constructor.
+     * @param $object
+     */
     public function __construct($object)
     {
         $this->Id = isset($object->id)?$object->id:null;

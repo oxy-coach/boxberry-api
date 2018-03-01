@@ -10,9 +10,9 @@ namespace Morfin60\BoxberryApi\Mapper;
 class Mapper
 {
 
-	/**
-	 * @var array список соответствий имени классу
-	 */
+    /**
+     * @var array список соответствий имени классу
+     */
     private $mappings;
 
     /**
@@ -48,20 +48,19 @@ class Mapper
     {
         if (is_array($data)) {
             return $this->convertObjects($data, $this->mappings[$type]);
-        }
-        elseif (is_object($data)) {
+        } elseif (is_object($data)) {
             return new $this->mappings[$type]($data, $this);
         }
     }
 
     /**
-     * @param $array массив объектов для преобразования
-     * @param $type тип, в который данный массив будет преобразован
+     * @param array $array массив объектов для преобразования
+     * @param $class тип, в который данный массив будет преобразован
      * @return array массив преобразованных объектов
      */
     private function convertObjects($array, $class)
     {
-        $result = array_map(function($object) use ($class) {
+        $result = array_map(function ($object) use ($class) {
             return new $class($object, $this);
         }, $array);
         return $result;
