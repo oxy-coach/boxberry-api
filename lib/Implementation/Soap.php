@@ -67,6 +67,14 @@ class Soap implements ApiInterface
     /**
      * {@inheritdoc}
      */
+    public function listCitiesFull()
+    {
+        return $this->sendRequest('ListCitiesFull')->result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function listPoints($city_code = 0, $prepaid = 0)
     {
         return $this->sendRequest('listPoints', [
