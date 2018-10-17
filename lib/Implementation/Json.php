@@ -56,6 +56,14 @@ class Json implements ApiInterface
     /**
      * {@inheritdoc}
      */
+    public function listCitiesFull()
+    {
+        return $this->sendRequest('listCitiesFull');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function listPoints($city_code = 0, $prepaid = 0)
     {
         return $this->sendRequest('listPoints', [
