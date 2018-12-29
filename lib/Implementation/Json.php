@@ -285,12 +285,14 @@ class Json implements ApiInterface
             if ('GET' === $type) {
                 $response = $this->client->get($this->url, [
                     'query' => $request_parameters,
-                    'connect_timeout' => 10
+                    'connect_timeout' => 10,
+                    'timeout' => 30
                 ]);
             } else {
                 $response = $this->client->post($this->url, [
                     'form_params' => $request_parameters,
-                    'connect_timeout' => 10
+                    'connect_timeout' => 10,
+                    'timeout' => 30
                 ]);
             }
 
