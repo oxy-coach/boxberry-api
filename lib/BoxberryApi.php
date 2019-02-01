@@ -69,7 +69,7 @@ class BoxberryApi implements ApiInterface
                 ]),
                 'type' => new Assert\Required([
                     new Assert\Type(['type' => 'string', 'message' => 'type should be {{ type }}']),
-                    new Assert\Choice(['choices' => $this->types, 'message' => 'type should be either JSON or SOAP'])
+                    new Assert\Choice(['strict' => true, 'choices' => $this->types, 'message' => 'type should be either JSON or SOAP'])
                 ]),
                 'use_https' => new Assert\Required([
                     new Assert\Type(['type' => 'bool', 'message' => 'use_https should be {{ type }}'])
@@ -130,7 +130,7 @@ class BoxberryApi implements ApiInterface
             ]),
             'prepaid' => new Assert\Required([
                 new Assert\Type(['type' => 'numeric', 'message' => 'prepaid should be {{ type }}']),
-                new Assert\Choice(['value' => [0, 1], 'message' => 'prepaid should be either 0 or 1'])
+                new Assert\Choice(['strict' => true, 'value' => [0, 1], 'message' => 'prepaid should be either 0 or 1'])
             ])
         ]);
 
@@ -249,7 +249,7 @@ class BoxberryApi implements ApiInterface
             ]),
             'photo' => new Assert\Required([
                 new Assert\Type(['type' => 'numeric', 'message' => 'photo should be {{ type }}']),
-                new Assert\Choice(['value' => [0, 1], 'message' => 'photo should be either 0 or 1'])
+                new Assert\Choice(['strict' => true, 'value' => [0, 1], 'message' => 'photo should be either 0 or 1'])
             ]),
         ]);
         $this->validator->validateValues($values, $constraint);
@@ -342,7 +342,7 @@ class BoxberryApi implements ApiInterface
 
         $constraint = new Assert\Collection([
             'only_postpaid' => new Assert\Required([
-                new Assert\Choice(['value' => [0, 1], 'message' => 'photo should be either 0 or 1'])
+                new Assert\Choice(['strict' => true, 'value' => [0, 1], 'message' => 'photo should be either 0 or 1'])
             ])
         ]);
 
