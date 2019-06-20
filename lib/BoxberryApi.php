@@ -18,6 +18,7 @@ class BoxberryApi implements ApiInterface
     const API_JSON = 'json';
     const API_SOAP = 'soap';
 
+    const API_URL_NEW = 'api.boxberry.ru';
     const API_URL = 'api.boxberry.de';
     const API_URL_TEST = 'test.api.boxberry.de';
 
@@ -46,10 +47,17 @@ class BoxberryApi implements ApiInterface
      * @param string|Morfin60\BoxberryApi\ApiInterface $type
      * @param bool $use_https
      * @param bool $test
+     * @param bool $newCabinet
+     *
      * @throws Exception\ValidationException
      */
-    public function __construct($api_key, $type = BoxberryApi::API_SOAP, $use_https = false, $test = false)
-    {
+    public function __construct(
+        $api_key,
+        $type = BoxberryApi::API_SOAP,
+        $use_https = false,
+        $test = false,
+        $newCabinet = true
+    ) {
         $this->types = [self::API_JSON, self::API_SOAP];
 
         $this->validator = new Validator();
@@ -84,7 +92,7 @@ class BoxberryApi implements ApiInterface
 
         $class = __NAMESPACE__.'\\Implementation\\'.ucfirst($type);
         if (class_exists($class)) {
-            $working_url = (true == $test) ? self::API_URL_TEST : self::API_URL;
+            $working_url = (true == $test) ? self::API_URL_TEST : ($newCabinet ? self::API_URL_NEW : self::API_URL);
             $this->impl = new $class($api_key, $working_url, $use_https);
         } else {
             throw new \InvalidArgumentException('Class for type {$type} does not exist', ApiException::BAD_API_CLASS);
