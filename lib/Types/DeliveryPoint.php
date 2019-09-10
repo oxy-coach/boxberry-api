@@ -36,6 +36,12 @@ class DeliveryPoint extends Base
      * @access public
      * @var string
      */
+    public $WorkShedule;
+
+    /**
+     * @access public
+     * @var string
+     */
     public $WorkSchedule;
 
     /**

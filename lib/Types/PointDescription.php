@@ -204,6 +204,12 @@ class PointDescription extends Base
      * @access public
      * @var string
      */
+    public $WorkSchedule;
+
+    /**
+     * @access public
+     * @var string
+     */
     public $WorkMoBegin;
 
     /**
