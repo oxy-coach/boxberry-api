@@ -259,6 +259,18 @@ class Json implements ApiInterface
     }
 
     /**
+     * @param array $data
+     *
+     * @return mixed
+     *
+     * @throws JsonException
+     */
+    public function createIntake($data)
+    {
+        return $this->sendRequest('createIntake', $data);
+    }
+
+    /**
      * {@inheritdoc}
      * @throws JsonException
      */

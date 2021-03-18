@@ -359,6 +359,27 @@ class BoxberryApi implements ApiInterface
     }
 
     /**
+     * @param $data
+     *
+     * @return array|object
+     *
+     * @throws Exception\ValidationException
+     */
+    public function createIntake($data)
+    {
+        $values = ['data' => $data];
+        $constraint = new Assert\Collection([
+            'data' => new Assert\Required([
+                new Assert\Type(['type' => 'array', 'message' => 'Type data for create intake must be an {{ type }}'])
+            ])
+        ]);
+
+        $this->validator->validateValues($values, $constraint);
+
+        return $this->mapper->map($this->impl->createIntake($data), 'ParselIntake');
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function sendRequest($method_name, $parameters = [], $options = [])
