@@ -36,6 +36,7 @@ class Mapper
             'Parsel' => $namespace.'\\Types\\Parsel',
             'Act' => $namespace.'\\Types\\Act',
             'OrderBalance' => $namespace.'\\Types\\OrderBalance',
+            'ParselIntake' => $namespace.'\\Types\\ParselIntake'
         ];
     }
 
