@@ -59,17 +59,21 @@ class Soap implements ApiInterface
     /**
      * {@inheritdoc}
      */
-    public function listCities()
+    public function listCities($country_code)
     {
-        return $this->sendRequest('ListCities')->result;
+        return $this->sendRequest('ListCities', [
+            'CountryCode' => $country_code
+        ])->result;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function listCitiesFull()
+    public function listCitiesFull($country_code)
     {
-        return $this->sendRequest('ListCitiesFull')->result;
+        return $this->sendRequest('ListCitiesFull', [
+            'CountryCode' => $country_code
+        ])->result;
     }
 
     /**

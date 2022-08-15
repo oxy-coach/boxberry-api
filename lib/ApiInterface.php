@@ -16,9 +16,17 @@ interface ApiInterface
 
     /**
      * Функция, получающая список городов с пунктами выдачи заказов
-     * @return array список городов в виде массива
+     * @param string|null $country_code Код страны для фильтра
+     * @return array Список городов в виде массива
      */
-    public function listCities();
+    public function listCities($country_code);
+
+    /**
+     * Функция, получающая список городов с пунктами выдачи заказов (полный)
+     * @param string|null $country_code Код страны для фильтра
+     * @return array Список городов в виде массива
+     */
+    public function listCitiesFull($country_code);
 
     /**
      * Позволяет получить информацию о всех точках выдачи заказов. При использовании дополнительного параметра

@@ -48,17 +48,21 @@ class Json implements ApiInterface
     /**
      * {@inheritdoc}
      */
-    public function listCities()
+    public function listCities($country_code)
     {
-        return $this->sendRequest('ListCities');
+        return $this->sendRequest('ListCities', [
+            'CountryCode' => $country_code
+        ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function listCitiesFull()
+    public function listCitiesFull($country_code)
     {
-        return $this->sendRequest('listCitiesFull');
+        return $this->sendRequest('listCitiesFull', [
+            'CountryCode' => $country_code
+        ]);
     }
 
     /**
