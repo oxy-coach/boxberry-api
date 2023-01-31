@@ -3,6 +3,7 @@
 namespace Morfin60\BoxberryApi\Validation;
 
 use Morfin60\BoxberryApi\Exception\ValidationException;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -167,6 +168,34 @@ class Validator
                     'missingFieldsMessage' => 'The field {{ field }} is missing.'
                 ])
             ])
+        ]);
+
+        $this->validateValues($values, $constraint);
+    }
+
+    /**
+     * Проверить массив с параметрами посылок
+     * @param array[] $parcels
+     * @throws \Morfin60\BoxberryApi\Exception\ValidationException
+     */
+    public function validateParcels($parcels)
+    {
+        $values = [
+            'parcels' => $parcels
+        ];
+
+        $constraint = new Assert\Collection([
+            'parcels' => new Assert\Required([
+                 new Assert\Callback(static function ($object, ExecutionContextInterface $context) {
+                     foreach ($object as $item) {
+                         $valid = (!empty($item['track']) || !empty($item['order_id']))
+                             && (isset($item['track']) xor isset($item['order_id']));
+                         if (false === $valid) {
+                             $context->addViolation('Track and order id are empty');
+                         }
+                     }
+                 })
+            ]),
         ]);
 
         $this->validateValues($values, $constraint);

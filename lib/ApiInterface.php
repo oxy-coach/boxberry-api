@@ -182,6 +182,14 @@ interface ApiInterface
     public function ordersBalance($only_postpaid = 0);
 
     /**
+     * Метод позволяет получить информацию по заказам (посылкам). Необходимо указать массив с
+     * трекинг кодами либо номерами заказов
+     * @param array[] $parcels
+     * @return array массив посылок
+     */
+    public function parcelInfo($parcels);
+
+    /**
      * Отправить запрос к API
      * @param string $method_name имя метода для отправки
      * @param array $parameters список параметров, который будет передан в API

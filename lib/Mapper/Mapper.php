@@ -33,6 +33,7 @@ class Mapper
             'DeliveryPrice' => $namespace.'\\Types\\DeliveryPrice',
             'ParcelsPoint' => $namespace.'\\Types\\ParcelsPoint',
             'PointDescription' => $namespace.'\\Types\\PointDescription',
+            'ParcelInfo' => $namespace.'\\Types\\ParcelInfo',
             'Parsel' => $namespace.'\\Types\\Parsel',
             'Act' => $namespace.'\\Types\\Act',
             'OrderBalance' => $namespace.'\\Types\\OrderBalance',

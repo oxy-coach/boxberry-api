@@ -2,6 +2,7 @@
 
 namespace Morfin60\BoxberryApi;
 
+use Morfin60\BoxberryApi\Types\ParcelInfo;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -377,6 +378,19 @@ class BoxberryApi implements ApiInterface
         $this->validator->validateValues($values, $constraint);
 
         return $this->mapper->map($this->impl->createIntake($data), 'ParselIntake');
+    }
+
+    /**
+     * @param array[] $parcels
+     *
+     * @return ParcelInfo[]
+     *
+     * @throws Exception\ValidationException
+     */
+    public function parcelInfo($parcels)
+    {
+        $this->validator->validateParcels($parcels);
+        return $this->mapper->map($this->impl->parcelInfo($parcels), 'ParcelInfo');
     }
 
     /**

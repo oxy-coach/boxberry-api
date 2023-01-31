@@ -276,6 +276,14 @@ class Json implements ApiInterface
 
     /**
      * {@inheritdoc}
+     */
+    public function parcelInfo($parcels)
+    {
+        return $this->sendRequest('parcelInfo', ['parcels' => $parcels], ['type' => 'POST']);
+    }
+
+    /**
+     * {@inheritdoc}
      * @throws JsonException
      */
     public function sendRequest($method, $parameters = [], $options = [])
