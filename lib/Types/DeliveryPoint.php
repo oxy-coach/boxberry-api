@@ -123,6 +123,12 @@ class DeliveryPoint extends Base
     public $DigitalSignature;
 
     /**
+     * @access public
+     * @var boolean
+     */
+    public $Postamat;
+
+    /**
      * DeliveryPoint constructor.
      * @param $object
      */

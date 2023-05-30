@@ -68,11 +68,12 @@ class Json implements ApiInterface
     /**
      * {@inheritdoc}
      */
-    public function listPoints($city_code = 0, $prepaid = 0)
+    public function listPoints($city_code = 0, $prepaid = 0, $include_postamat = 0)
     {
         return $this->sendRequest('listPoints', [
             'CityCode' => $city_code,
-            'prepaid' => $prepaid
+            'prepaid' => $prepaid,
+            'is_include_postamat' => $include_postamat,
         ]);
     }
 

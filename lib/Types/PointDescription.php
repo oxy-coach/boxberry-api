@@ -423,6 +423,12 @@ class PointDescription extends Base
     public $TerminalPhone;
 
     /**
+     * @access public
+     * @var boolean
+     */
+    public $Postamat;
+
+    /**
      * PointDescription constructor.
      * @param $object
      */

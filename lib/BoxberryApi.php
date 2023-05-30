@@ -121,12 +121,12 @@ class BoxberryApi implements ApiInterface
     /**
      * {@inheritdoc}
      */
-    public function listPoints($city_code = 0, $prepaid = 0)
+    public function listPoints($city_code = 0, $prepaid = 0, $include_postamat = 0)
     {
-
         $values = [
             'city_code' => $city_code,
-            'prepaid' => $prepaid
+            'prepaid' => $prepaid,
+            'include_postamat' => $include_postamat,
         ];
 
         $constraint = new Assert\Collection([
@@ -140,11 +140,15 @@ class BoxberryApi implements ApiInterface
             'prepaid' => new Assert\Required([
                 new Assert\Type(['type' => 'numeric', 'message' => 'prepaid should be {{ type }}']),
                 new Assert\Choice(['strict' => true, 'value' => [0, 1], 'message' => 'prepaid should be either 0 or 1'])
-            ])
+            ]),
+            'include_postamat' => new Assert\Optional([
+                new Assert\Type(['type' => 'numeric', 'message' => 'include_postamat should be {{ type }}']),
+                new Assert\Choice(['strict' => true, 'value' => [0, 1], 'message' => 'include_postamat should be either 0 or 1'])
+            ]),
         ]);
 
         $this->validator->validateValues($values, $constraint);
-        return $this->mapper->map($this->impl->listPoints($city_code, $prepaid), 'DeliveryPoint');
+        return $this->mapper->map($this->impl->listPoints($city_code, $prepaid, $include_postamat), 'DeliveryPoint');
     }
 
     /**
