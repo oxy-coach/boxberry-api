@@ -31,6 +31,8 @@ class Mapper
             'Service' => $namespace.'\\Types\\Service',
             'CourierCity' => $namespace.'\\Types\\CourierCity',
             'DeliveryPrice' => $namespace.'\\Types\\DeliveryPrice',
+            'DeliveryCost' => $namespace.'\\Types\\DeliveryCost',
+            'DeliveryCosts' => $namespace.'\\Types\\DeliveryCosts',
             'ParcelsPoint' => $namespace.'\\Types\\ParcelsPoint',
             'PointDescription' => $namespace.'\\Types\\PointDescription',
             'ParcelInfo' => $namespace.'\\Types\\ParcelInfo',

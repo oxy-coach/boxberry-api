@@ -202,6 +202,28 @@ class Validator
     }
 
     /**
+     * Проверить массив параметров калькулейта
+     * @param array $parameters
+     * @return void
+     * @throws ValidationException
+     */
+    public function validateDeliveryCalculation(array $parameters)
+    {
+        $constraint = new Assert\Collection([
+            'fields' => [
+                'BoxSizes' => new Assert\Required([
+                    new Assert\Type(['type' => 'array', 'message' => 'BoxSizes should be {{ type }}']),
+                    new Assert\Count(['min' => 1, 'minMessage' => 'BoxSizes should not be empty']),
+                ])
+            ],
+            'allowExtraFields' => true,
+            'allowMissingFields' => true,
+        ]);
+
+        $this->validateValues($parameters, $constraint);
+    }
+
+    /**
      * Функция, проверяющая входные значения используя набор правил $constraint
      * @param array $values ассоциативный массив полей
      * @param \Symfony\Component\Validator\Constraints\Collection

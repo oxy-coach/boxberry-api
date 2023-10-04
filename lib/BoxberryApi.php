@@ -231,6 +231,15 @@ class BoxberryApi implements ApiInterface
     /**
      * {@inheritdoc}
      */
+    public function deliveryCalculation($parameters)
+    {
+        $this->validator->validateDeliveryCalculation($parameters);
+        return $this->mapper->map($this->impl->deliveryCalculation($parameters), 'DeliveryCosts');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function pointsForParcels()
     {
         return $this->mapper->map($this->impl->pointsForParcels(), 'ParcelsPoint');

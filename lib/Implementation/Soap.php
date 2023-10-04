@@ -153,6 +153,14 @@ class Soap implements ApiInterface
     /**
      * {@inheritdoc}
      */
+    public function deliveryCalculation($parameters)
+    {
+        throw new \Exception('Method is not supported by SOAP Boxberry');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function pointsForParcels()
     {
         return $this->sendRequest('pointsForParcels');

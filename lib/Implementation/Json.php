@@ -139,6 +139,14 @@ class Json implements ApiInterface
     /**
      * {@inheritdoc}
      */
+    public function deliveryCalculation($parameters)
+    {
+        return $this->sendRequest('deliveryCalculation', $parameters, ['type' => 'POST']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function pointsForParcels()
     {
         return $this->sendRequest('pointsForParcels');

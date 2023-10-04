@@ -97,6 +97,14 @@ interface ApiInterface
     public function deliveryCosts($parameters = []);
 
     /**
+     * Позволяет получить стоимость доставки заказа с учётом стоимости постоянных услуг, предусмотренных договором.
+     * @see https://help.boxberry.ru/pages/viewpage.action?pageId=60096989
+     * @param $parameters
+     * @return array массив с результатами вычисления
+     */
+    public function deliveryCalculation($parameters);
+
+    /**
      * Позволяет получить список точек приёма посылок.
      * @return array массив с точками приёма посылок
      */
